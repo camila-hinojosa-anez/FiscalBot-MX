@@ -18,13 +18,13 @@ El reporte se envía automáticamente a través de un Webhook de Google Chat con
 
 ---
 
-## 📘 Documentación Adicional
+## Documentación Adicional
 Para más detalles técnicos sobre el código y la lógica interna, consulta:
-👉 **[TECHNICAL_DETAILS.md](./TECHNICAL_DETAILS.md)**
+**[TECHNICAL_DETAILS.md](./TECHNICAL_DETAILS.md)**
 
 ---
 
-## 📅 Automatización y Resiliencia
+## Automatización y Resiliencia
 El bot es resiliente: detecta si hubo una ejecución pendiente y la realiza al momento de abrir la pestaña.
 
 ## 🛠️ Configuración
