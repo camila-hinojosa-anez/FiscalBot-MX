@@ -1,0 +1,5 @@
+{
+  "name": "FiscalNews Automator México",
+  "description": "Automatización inteligente para buscar, resumir y compartir noticias fiscales y laborales de México (SAT, IMSS, Infonavit, UMA) vía Google Chat.",
+  "requestFramePermissions": []
+}
