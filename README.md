@@ -1,7 +1,7 @@
 
 # 🏛️ FiscalBot MX - Automatización de Inteligencia Fiscal
 
-FiscalBot MX es una herramienta avanzada de monitoreo y síntesis de noticias fiscales y laborales diseñada para contadores, despachos legales y departamentos de RH en México. Utiliza inteligencia artificial de última generación para transformar la saturación de información en reportes accionables.
+FiscalBot MX es una herramienta de monitoreo y síntesis de noticias fiscales y laborales diseñada para contadores, despachos legales y departamentos de RH en México. Utiliza inteligencia artificial para transformar la saturación de información en reportes accionables.
 
 ## 🚀 ¿Cómo funciona?
 
