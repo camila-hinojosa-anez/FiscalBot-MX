@@ -3,7 +3,7 @@
 
 FiscalBot MX es una herramienta de monitoreo y síntesis de noticias fiscales y laborales diseñada para contadores, despachos legales y departamentos de RH en México. Utiliza inteligencia artificial para transformar la saturación de información en reportes accionables.
 
-## 🚀 ¿Cómo funciona?
+## ¿Cómo funciona?
 
 El bot opera bajo un flujo de tres etapas: **Búsqueda**, **Priorización** y **Distribución**.
 
@@ -27,7 +27,7 @@ Para más detalles técnicos sobre el código y la lógica interna, consulta:
 ## Automatización y Resiliencia
 El bot es resiliente: detecta si hubo una ejecución pendiente y la realiza al momento de abrir la pestaña.
 
-## 🛠️ Configuración
+## Configuración
 ### Requisitos
 1. **Gemini API Key:** Necesaria para el procesamiento de IA y búsqueda.
 2. **Webhook de Google Chat:** Se obtiene en la configuración del espacio de Google Chat.
