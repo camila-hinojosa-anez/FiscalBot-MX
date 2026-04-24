@@ -20,9 +20,35 @@ export const fetchFiscalNews = async (topics: string[], lastReportText: string =
 
   const topicsStr = topics.join(', ');
   
+  const monitoringUrls = [
+    "https://www.dof.gob.mx/",
+    "https://www.sat.gob.mx/portal/public/tramites/complemento-de-nomina",
+    "https://www.imss.gob.mx/prensa/archivo",
+    "https://portalmx.infonavit.org.mx/wps/portal/infonavitmx/mx2/patrones/centro_ayuda/avisos_eventos",
+    "https://www.gob.mx/stps",
+    "https://www.gob.mx/conasami",
+    "https://wwwnp.sat.gob.mx/minisitio/NormatividadRMFyRGCE/normatividad_rmf_rgce2026.html",
+    "https://www.inegi.org.mx/app/saladeprensa/",
+    "https://www.dof.gob.mx/nota_detalle.php?codigo=5781417&fecha=03/03/2026"
+  ];
+
   const prompt = `
-    Eres un analista de inteligencia fiscal de alto nivel en México. 
-    Hoy es ${today}. Tu tarea es buscar noticias sobre: ${topicsStr}.
+    Eres un analista de inteligencia fiscal de alto nivel en México, especializado en nómina y cumplimiento patronal.
+    Hoy es ${today}. Tu tarea es buscar noticias y actualizaciones críticas sobre: ${topicsStr}.
+
+    FUENTES ESPECÍFICAS A MONITOREAR:
+    - DOF (Diario Oficial): Decretos, reformas, resoluciones (SAT, IMSS, STPS, INFONAVIT).
+    - SAT CFDI Nómina: Cambios en complemento, guías de llenado, catálogos.
+    - IMSS Prensa/IDSE: Cambios operativos, validaciones.
+    - SUA: Layouts, reglas de cálculo, actualizaciones de software.
+    - INFONAVIT Portal Empresas: Avisos de retención, cambios en descuentos.
+    - STPS & JORNADA LABORAL: Reformas a la Ley Federal del Trabajo, cambios en jornadas (ej. Ley de 40 horas), vacaciones, subcontratación.
+    - CONASAMI: Salarios mínimos.
+    - SAT RMF: Reglas misceláneas 2026.
+    - INEGI: Indicadores UMA/UMI.
+
+    URLS DE REFERENCIA:
+    ${monitoringUrls.join('\n')}
 
     CONTEXTO DE COMPARACIÓN:
     El último reporte enviado contenía esta información:
@@ -32,16 +58,16 @@ export const fetchFiscalNews = async (topics: string[], lastReportText: string =
 
     INSTRUCCIONES DE DIFERENCIACIÓN:
     1. PRIORIZA LO NUEVO: Compara tus hallazgos de hoy con el reporte anterior. Solo resalta como "NOTICIA" aquello que sea una actualización, un cambio de estado o información que no estaba presente antes.
-    2. REGLA UMA: La UMA se actualiza en febrero. Si ya pasó febrero y no hay cambios legales nuevos sobre su cálculo, NO la menciones como noticia, a menos que sea el tema principal solicitado y haya algo extraordinario.
-    3. EVITA REDUNDANCIA: Si la situación legal de un tema (ej. una prórroga del SAT) sigue siendo la misma que en el reporte anterior, redúcela a una mención breve en una sección de "Estatus sin cambios".
+    2. IMPACTO EN NÓMINA Y OPERACIÓN: Para cada hallazgo, explica brevemente el impacto en el cálculo de nómina, costos sociales o la operación de la jornada laboral (ej. pago de horas extra, turnos).
+    3. REGLA JORNADA 40 HORAS: Monitorea activamente cualquier mención en el DOF o comunicados de la STPS sobre la reducción de la jornada laboral a 40 horas.
+    4. REGLA UMA: La UMA se actualiza en febrero. Si ya pasó febrero y no hay cambios legales nuevos sobre su cálculo, NO la menciones como noticia, a menos que sea el tema principal solicitado y haya algo extraordinario.
+    4. EVITA REDUNDANCIA: Si la situación legal de un tema sigue siendo la misma que en el reporte anterior, redúcela a una mención breve en una sección de "Estatus sin cambios".
 
     ESTRUCTURA DEL REPORTE:
     - # 🆕 NOVEDADES Y CAMBIOS (Solo información detectada hoy que NO estaba en el reporte anterior)
     - # 🚨 ALERTAS CRÍTICAS (DOF, Plazos que vencen pronto)
-    - ## Resumen por Tema
+    - ## Resumen por Tema (Incluye "Impacto en Nómina")
     - ## Acciones Recomendadas
-
-    FUENTES OBLIGATORIAS: dof.gob.mx, sat.gob.mx, imss.gob.mx, infonavit.org.mx.
 
     REGLAS DE FORMATO:
     - Usa **negritas** para fechas y cifras.

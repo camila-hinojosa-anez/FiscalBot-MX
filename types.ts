@@ -25,13 +25,17 @@ export interface AppSettings {
 }
 
 export enum Topic {
-  SAT = 'SAT',
-  IMSS = 'IMSS',
+  DOF = 'DOF',
+  SAT_CFDI = 'SAT CFDI',
+  SAT_RMF = 'SAT RMF',
+  IMSS_IDSE = 'IMSS IDSE',
+  IMSS_SUA = 'IMSS SUA',
   INFONAVIT = 'Infonavit',
+  STPS = 'STPS',
+  CONASAMI = 'CONASAMI',
+  INEGI = 'INEGI',
   UMA = 'UMA',
-  IDSE = 'IDSE',
-  CFDI = 'CFDI',
-  SUA = 'SUA'
+  JORNADA_LABORAL = 'Jornada Laboral'
 }
 
 export const TOPICS_LIST = Object.values(Topic);

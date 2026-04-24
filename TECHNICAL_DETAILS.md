@@ -33,12 +33,16 @@ La IA actúa como un agente que:
 ## 3. Lógica de Priorización (Prompt Engineering)
 La jerarquización de las noticias se logra mediante una técnica de **Chain-of-Thought Prompting**. El sistema instruye a la IA para que evalúe cada noticia encontrada bajo una matriz de impacto legal:
 
-| Nivel | Criterio de Selección | Fuentes Primarias |
-|-------|-----------------------|-------------------|
-| **1. Crítico** | Reformas de Ley, Decretos | DOF (Diario Oficial) |
-| **2. Urgente** | Prórrogas, Vencimientos | SAT, IMSS |
-| **3. Relevante** | Cambios en Tasas o UMA | Comunicados Oficiales |
-| **4. General** | Análisis de expertos | Sitios especializados |
+| Nivel | Criterio de Selección | Fuentes Primarias | URLs Monitoreadas |
+|-------|-----------------------|-------------------|-------------------|
+| **1. Crítico** | Reformas de Ley, Decretos | DOF (Diario Oficial) | [dof.gob.mx](https://www.dof.gob.mx/) |
+| **2. Nómina** | Complemento de Nómina | SAT CFDI | [sat.gob.mx/complemento-nomina](https://www.sat.gob.mx/portal/public/tramites/complemento-de-nomina) |
+| **3. Seguridad Social** | IDSE, SUA, Prensa IMSS | IMSS | [imss.gob.mx/prensa](https://www.imss.gob.mx/prensa/archivo) |
+| **4. Vivienda** | INFONAVIT Portal Empresas | INFONAVIT | [portalmx.infonavit.org.mx](https://portalmx.infonavit.org.mx/wps/portal/infonavitmx/mx2/patrones/centro_ayuda/avisos_eventos) |
+| **5. Laboral** | Reformas, Jornada 40h, Vacaciones | STPS | [gob.mx/stps](https://www.gob.mx/stps) |
+| **6. Salarios** | Salarios Mínimos | CONASAMI | [gob.mx/conasami](https://www.gob.mx/conasami) |
+| **7. Miscelánea** | RMF 2026 | SAT | [wwwnp.sat.gob.mx](https://wwwnp.sat.gob.mx/minisitio/NormatividadRMFyRGCE/normatividad_rmf_rgce2026.html) |
+| **8. Indicadores** | UMA / UMI | INEGI | [inegi.org.mx/saladeprensa](https://www.inegi.org.mx/app/saladeprensa/) |
 
 Si la IA detecta una publicación en el **DOF**, el sistema de prompt le obliga a colocarla en la sección `🚨 ALERTAS DE ALTO IMPACTO` antes que cualquier otro resumen.
 
