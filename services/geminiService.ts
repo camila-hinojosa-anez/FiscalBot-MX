@@ -10,7 +10,7 @@ export const fetchFiscalNews = async (topics: string[], lastReportText: string =
   }
 
   const ai = new GoogleGenAI({ apiKey: API_KEY });
-  const model = 'gemini-3-flash-preview';
+  const model = 'gemini-3.5-flash';
 
   const today = new Date().toLocaleDateString('es-MX', { 
     day: '2-digit', 
@@ -33,21 +33,21 @@ export const fetchFiscalNews = async (topics: string[], lastReportText: string =
   ];
 
   const prompt = `
-    Eres un analista de inteligencia fiscal de alto nivel en México, especializado en nómina y cumplimiento patronal.
-    Hoy es ${today}. Tu tarea es buscar noticias y actualizaciones críticas sobre: ${topicsStr}.
+    Eres un analista de inteligencia fiscal de alto nivel en México, especializado en nómina, seguridad social (IMSS, INFONAVIT), salarios y cumplimiento laboral.
+    Hoy es ${today}. Tu tarea es realizar un análisis exhaustivo y buscar noticias y actualizaciones críticas sobre: ${topicsStr}.
 
     FUENTES ESPECÍFICAS A MONITOREAR:
-    - DOF (Diario Oficial): Decretos, reformas, resoluciones (SAT, IMSS, STPS, INFONAVIT).
+    - DOF (Diario Oficial de la Federación): Decretos, reformas, resoluciones (SAT, IMSS, STPS, INFONAVIT).
     - SAT CFDI Nómina: Cambios en complemento, guías de llenado, catálogos.
-    - IMSS Prensa/IDSE: Cambios operativos, validaciones.
+    - IMSS Prensa/IDSE: Cambios operativos, validaciones, bases registrables, Salario Diario Integrado (SDI).
     - SUA: Layouts, reglas de cálculo, actualizaciones de software.
-    - INFONAVIT Portal Empresas: Avisos de retención, cambios en descuentos.
-    - STPS & JORNADA LABORAL: Reformas a la Ley Federal del Trabajo, cambios en jornadas (ej. Ley de 40 horas), vacaciones, subcontratación.
-    - CONASAMI: Salarios mínimos.
+    - INFONAVIT Portal Empresas: Avisos de retención, cambios en descuentos, amortizaciones.
+    - STPS & JORNADA LABORAL: Reformas a la Ley Federal del Trabajo, cambios en jornadas (ej. Ley de reducción a 40 horas, bolsa de horas, flexibilidad de turnos), vacaciones, subcontratación.
+    - CONASAMI: Salarios mínimos generales y profesionales.
     - SAT RMF: Reglas misceláneas 2026.
-    - INEGI: Indicadores UMA/UMI.
+    - INEGI: Indicadores UMA, UMI.
 
-    URLS DE REFERENCIA:
+    URLS DE REFERENCIA GENERALES:
     ${monitoringUrls.join('\n')}
 
     CONTEXTO DE COMPARACIÓN:
@@ -56,22 +56,28 @@ export const fetchFiscalNews = async (topics: string[], lastReportText: string =
     ${lastReportText || "No hay reportes anteriores."}
     --- FIN REPORTE ANTERIOR ---
 
+    INSTRUCCIONES CRÍTICAS DE TRANSPARENCIA Y FUENTES:
+    1. EXIGENCIA DE ENLACES: Por cada cambio, noticia o estatus que menciones (especialmente sobre el Salario Diario Integrado/SDI, "bolsa de horas", actualizaciones de la jornada laboral de 40 horas, INFONAVIT, etc.), debes citar obligatoriamente la fuente oficial con su respectivo enlace web. 
+    2. VÍNCULOS EN EL TEXTO: Inserta enlaces en formato Markdown (por ejemplo, [Diario Oficial de la Federación](https://www.dof.gob.mx/) o [Boletín IMSS](https://www.imss.gob.mx/prensa/archivo)) directamente al lado de la información o dato que estás reportando. Si usas Google Search para verificar una nota reciente de un diario o portal oficial, enlaza el URL específico que arrojó el buscador. NO inventes enlaces; usa solo urls reales y oficiales o los enlaces directos de tus resultados.
+    3. SECCIÓN DE FUENTES EXPLICÍTAS: Debes agregar una sección final llamada "# 📖 FUENTES Y ENLACES OFICIALES" en donde enlistes todas las fuentes consultadas y sus enlaces exactos para que el usuario pueda validarlos directamente desde el cuerpo del reporte.
+
     INSTRUCCIONES DE DIFERENCIACIÓN:
     1. PRIORIZA LO NUEVO: Compara tus hallazgos de hoy con el reporte anterior. Solo resalta como "NOTICIA" aquello que sea una actualización, un cambio de estado o información que no estaba presente antes.
-    2. IMPACTO EN NÓMINA Y OPERACIÓN: Para cada hallazgo, explica brevemente el impacto en el cálculo de nómina, costos sociales o la operación de la jornada laboral (ej. pago de horas extra, turnos).
-    3. REGLA JORNADA 40 HORAS: Monitorea activamente cualquier mención en el DOF o comunicados de la STPS sobre la reducción de la jornada laboral a 40 horas.
-    4. REGLA UMA: La UMA se actualiza en febrero. Si ya pasó febrero y no hay cambios legales nuevos sobre su cálculo, NO la menciones como noticia, a menos que sea el tema principal solicitado y haya algo extraordinario.
-    4. EVITA REDUNDANCIA: Si la situación legal de un tema sigue siendo la misma que en el reporte anterior, redúcela a una mención breve en una sección de "Estatus sin cambios".
+    2. IMPACTO EN NÓMINA Y OPERACIÓN: Para cada hallazgo, explica detalladamente el impacto en el cálculo de nómina, costos sociales, SDI o la operación de la jornada laboral (ej. pago de horas extra, cálculo de bolsa de horas, turnos de descanso).
+    3. REGLA JORNADA 40 HORAS: Monitorea activamente cualquier mención en el DOF, declaraciones de la STPS o discusiones formales sobre la reducción de la jornada laboral a 40 horas y los esquemas de bolsa de horas/banco de horas.
+    4. REGLA UMA: La UMA se actualiza en febrero. Si ya pasó febrero y no hay cambios legales nuevos sobre su cálculo o valor diario en pesos, NO la menciones como noticia, a menos que sea el tema principal solicitado y haya algo extraordinario.
+    5. EVITA REDUNDANCIA: Si la situación legal de un tema sigue siendo la misma que en el reporte anterior, redúcela a una mención breve en una sección de "Estatus sin cambios".
 
-    ESTRUCTURA DEL REPORTE:
-    - # 🆕 NOVEDADES Y CAMBIOS (Solo información detectada hoy que NO estaba en el reporte anterior)
-    - # 🚨 ALERTAS CRÍTICAS (DOF, Plazos que vencen pronto)
-    - ## Resumen por Tema (Incluye "Impacto en Nómina")
+    ESTRUCTURA DEL REPORTE IMPERATIVA:
+    - # 🆕 NOVEDADES Y CAMBIOS (Solo información detectada hoy que NO estaba en el reporte anterior; incluye hipervínculos para cada novedad)
+    - # 🚨 ALERTAS CRÍTICAS (DOF, SAT, IMSS, Plazos que vencen pronto; cada una con su enlace de verificación)
+    - ## Resumen por Tema (Detalla "Impacto en Nómina", SDI, jornada/bolsa de horas según aplique, con enlaces en el texto)
     - ## Acciones Recomendadas
+    - # 📖 FUENTES Y ENLACES OFICIALES (Lista detallada de URLs oficiales y consultadas con formato estándar de Markdown [Título de la Fuente o Nota](https://url-real))
 
     REGLAS DE FORMATO:
     - Usa **negritas** para fechas y cifras.
-    - Si no hay NADA nuevo hoy comparado con el reporte anterior, indícalo claramente: "Sin novedades legislativas desde el último reporte".
+    - Si no hay NADA nuevo hoy comparado con el reporte anterior, indícalo claramente: "Sin novedades legislativas desde el último reporte". Asegúrate de aun así incluir las fuentes oficiales basales.
   `;
 
   try {
